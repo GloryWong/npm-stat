@@ -2,11 +2,11 @@ import ky from "ky";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { packageName } = req.query;
+  const { packageName, period = 'last-week' } = req.query;
 
   try {
     const data = await ky.get(
-      `https://api.npmjs.org/downloads/range/last-week/${packageName}`
+      `https://api.npmjs.org/downloads/range/${period}/${packageName}`
     ).json();
 
     res.status(200).json(data);

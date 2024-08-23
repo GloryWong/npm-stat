@@ -14,14 +14,17 @@ interface DownloadData {
   package: string
 }
 
-interface DownloadGraphProps {
+export type Period = 'last-day' | 'last-week' | 'last-month' | 'last-year'
+
+export interface DownloadGraphProps {
   packageName: string
+  period?: Period
 }
 
 let chart: Chart;
 
-export default function DownloadGraph({ packageName }: DownloadGraphProps) {
-  const {data, error, isLoading} = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}`, fetcher);
+export default function DownloadGraph({ packageName, period }: DownloadGraphProps) {
+  const {data, error, isLoading} = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${ period ? `?period=${period}` : '' }`, fetcher);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
