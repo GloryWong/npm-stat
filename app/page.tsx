@@ -1,13 +1,13 @@
 "use client";
 
 import React, { lazy, Suspense, useEffect, useState } from 'react';
-import PakcageList from '@/components/PackageList';
 import { Button, Divider, Input, Spinner } from '@nextui-org/react';
 import { useSearchParams } from 'react-router-dom';
 import { Period } from '@/components/DownloadGraph';
 import { Icon } from '@iconify/react'
 
 const DownloadGraphs = lazy(() => import('@/components/DownloadGraphs'))
+const PackageList = lazy(() => import('@/components/PackageList'))
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -55,9 +55,16 @@ export default function Home() {
             <Icon icon="material-symbols:search" />
           </Button>
         </div>
-        <div className='flex-grow min-h-0'>
+        <div className='flex-grow min-h-0 flex justify-center'>
         {
-          userName && <PakcageList userName={userName} onSelect={(name) => setPackageName(name as string)} />
+          userName ? 
+          <Suspense fallback={<Spinner />}>
+            <PackageList userName={userName} onSelect={(name) => setPackageName(name as string)} />
+          </Suspense> :
+          <div className='flex items-center gap-2 flex-wrap'>
+            <Icon icon='fa6-regular:hand-point-up' />
+              Type an author name to search for packages
+            </div>
         }
         </div>
       </div>
@@ -67,7 +74,11 @@ export default function Home() {
         <Suspense fallback={<Spinner />}>
             <DownloadGraphs packageName={packageName} period={period} onPeriodChange={setPeriod} />
         </Suspense>
-          : <div>Select a package</div> }
+          : <div className='flex items-center gap-2'>
+            <Icon icon='fa6-regular:hand-point-left' />
+              Select a package in the package lists
+            </div>
+        }
       </div>
     </div>
   );
