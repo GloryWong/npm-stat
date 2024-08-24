@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.2](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.1...npm-stat-v0.1.2) (2024-08-24)
+
+
+### Features
+
+* **download graph:** support multiple periods ([9a2a2b9](https://github.com/GloryWong/npm-stat/commit/9a2a2b9c331f8eb23fc7491bb597de73bdb2a88d))
+* footer and some other ui/ux enhancement ([65347e3](https://github.com/GloryWong/npm-stat/commit/65347e396ebeb5dbf45714a32db36d7356d60548))
+* **pacakge list:** support searching with author ([3895427](https://github.com/GloryWong/npm-stat/commit/38954279f9d2957741e8af9c03e04c106bcc2876))
+* use react router and react-chart.js ([510e5ae](https://github.com/GloryWong/npm-stat/commit/510e5ae47170eafeed3b1a85f71489197e0a3272))
+
 ## [0.1.1](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.0...npm-stat-v0.1.1) (2024-08-23)
 
 
