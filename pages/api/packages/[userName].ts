@@ -6,9 +6,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { userName } = req.query;
 
   try {
-    // https://registry.npmjs.org/-/v1/search?text=maintainer:gloxy
+    // https://registry.npmjs.org/-/v1/search?text=author:gloxy
     const data = await ky.get<any>(
-      `https://registry.npmjs.org/-/v1/search?text=maintainer:${userName}`
+      `https://registry.npmjs.org/-/v1/search?text=author:${userName}`
     ).json();
 
     const packages = data.objects.map((v: any) => {

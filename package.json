@@ -35,8 +35,10 @@
   },
   "dependencies": {
     "@gloxy/logger": "^2.2.2",
+    "@iconify/react": "^5.0.2",
     "@nextui-org/react": "^2.4.6",
     "chart.js": "^4.4.4",
+    "debounce": "^2.1.0",
     "framer-motion": "^11.3.29",
     "ky": "^1.7.1",
     "next": "14.2.6",

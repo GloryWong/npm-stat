@@ -26,6 +26,7 @@ export default function DownloadGraph({ packageName, period }: DownloadGraphProp
   const {data, error, isLoading} = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${ period ? `?period=${period}` : '' }`, fetcher);
 
   const chartOptions = {
+    maintainAspectRatio: false,
     responsive: true,
     interaction: {
       intersect: false,
