@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.2...npm-stat-v0.1.3) (2024-08-24)
+
+
+### Bug Fixes
+
+* **package list:** width full ([f3b8588](https://github.com/GloryWong/npm-stat/commit/f3b858880c0f2f4c1925858acf1d99d4d25a9a81))
+
 ## [0.1.2](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.1...npm-stat-v0.1.2) (2024-08-24)
 
 
