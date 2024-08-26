@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.3...npm-stat-v0.1.4) (2024-08-26)
+
+
+### Bug Fixes
+
+* optimize with best practices ([d2bd9e5](https://github.com/GloryWong/npm-stat/commit/d2bd9e5e8b4b1e813e4c15440b461b733d76bbd5))
+
 ## [0.1.3](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.2...npm-stat-v0.1.3) (2024-08-24)
 
 
