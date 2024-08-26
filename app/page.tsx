@@ -1,6 +1,6 @@
 "use client";
 
-import React, { lazy, Suspense, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { Button, Divider, Input, Spinner } from '@nextui-org/react';
 import { useSearchParams } from 'react-router-dom';
 import { Period } from '@/components/DownloadGraph';
@@ -15,32 +15,29 @@ export default function Home() {
   const [period, setPeriod] = useState<Period>(searchParams.get('period') as Period | null ?? 'last-week');
   const [userName, setUserName] = useState<string | undefined>(searchParams.get('userName') ?? undefined)
 
-  const updateSearchParam = (key: string, value?: string) => {
-    if (value) {
-      searchParams.set(key, value)
-      setSearchParams(searchParams)
-    }
-    else {
-      searchParams.delete(key)
-      setSearchParams(searchParams)
-    }
+  function useUpdateSearchParam(key: string, value?: string) {
+    useEffect(() => {
+      if (searchParams.get(key) === value) return;
+
+      setSearchParams((val) => {
+        if (!value)
+          val.delete(key)
+        else
+          val.set(key, value)
+
+        return val
+      })
+    }, [searchParams, setSearchParams, key, value])
   }
 
-  useEffect(() => {
-    updateSearchParam('packageName', packageName)
-  }, [packageName])
-
-  useEffect(() => {
-    updateSearchParam('period', period)
-  }, [period])
+  useUpdateSearchParam('packageName', packageName)
+  useUpdateSearchParam('period', period)
+  useUpdateSearchParam('userName', userName)
 
   const [input, setInput] = useState<string>(searchParams.get('userName') ?? '')
-  const confirmInput = () => {
+  const confirmInput = useCallback(() => {
     setUserName(input)
-  }
-  useEffect(() => {
-    updateSearchParam('userName', userName)
-  }, [userName])
+  }, [input])
 
   return (
     <div className='w-full h-full flex gap-2'>
