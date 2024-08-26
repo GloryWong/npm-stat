@@ -8,14 +8,14 @@ import useSWR from "swr";
 
 Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, LinearScale, Filler, Title, Tooltip, Legend);
 
-interface DownloadData {
+export interface DownloadData {
   downloads: { day: string, downloads: number }[],
   start: string,
   end: string,
   package: string
 }
 
-export type Period = 'last-day' | 'last-week' | 'last-month' | 'last-year'
+export type Period = 'last-week' | 'last-month' | 'last-year'
 
 export interface DownloadGraphProps {
   packageName: string

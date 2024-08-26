@@ -4,7 +4,7 @@ import { Key } from "react";
 import useSWR from "swr";
 import { Icon } from '@iconify/react'
 
-interface Package {
+export interface Package {
   name: string
   version: string
   description: string

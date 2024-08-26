@@ -6,8 +6,9 @@ interface DownloadGraphsProps extends DownloadGraphProps {
   onPeriodChange?: (period: Period) => void
 }
 
+export const periods: Period[] = ['last-week', 'last-month', 'last-year']
+
 export default function DownloadGraphs({ packageName, period = 'last-week', onPeriodChange }: DownloadGraphsProps) {
-  const periods: Period[] = useMemo(() => ['last-week', 'last-month', 'last-year'], [])
   const items = useMemo(() => periods.map(v => ({ period: v })), [periods])
   const [selected, setSelected] = useState(period)
 
