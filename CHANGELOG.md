@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.5...npm-stat-v0.1.6) (2024-08-27)
+
+
+### Bug Fixes
+
+* **mocking api:** loading ui improvement ([1c151be](https://github.com/GloryWong/npm-stat/commit/1c151bea4d836db91f6d90450f2ae9c3906decb0))
+
 ## [0.1.5](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.4...npm-stat-v0.1.5) (2024-08-27)
 
 
