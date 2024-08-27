@@ -1,17 +1,18 @@
-"use client";
-import { fetcher } from "@/utils/fetcher";
-import { Spinner } from "@nextui-org/react";
-import { CategoryScale, Chart, ChartData, Filler, Legend, LinearScale, LineController, LineElement, PointElement, Title, Tooltip } from "chart.js";
-import { useEffect, useMemo, useState } from "react";
-import { Line } from "react-chartjs-2";
-import useSWR from "swr";
+'use client'
+import { Spinner } from '@nextui-org/react'
+import type { ChartData } from 'chart.js'
+import { CategoryScale, Chart, Filler, Legend, LineController, LineElement, LinearScale, PointElement, Title, Tooltip } from 'chart.js'
+import { useEffect, useMemo, useState } from 'react'
+import { Line } from 'react-chartjs-2'
+import useSWR from 'swr'
+import { fetcher } from '@/utils/fetcher'
 
-Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, LinearScale, Filler, Title, Tooltip, Legend);
+Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, LinearScale, Filler, Title, Tooltip, Legend)
 
 export interface DownloadData {
-  downloads: { day: string, downloads: number }[],
-  start: string,
-  end: string,
+  downloads: { day: string, downloads: number }[]
+  start: string
+  end: string
   package: string
 }
 
@@ -23,7 +24,7 @@ export interface DownloadGraphProps {
 }
 
 export default function DownloadGraph({ packageName, period }: DownloadGraphProps) {
-  const {data, error, isLoading} = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${ period ? `?period=${period}` : '' }`, fetcher);
+  const { data, error, isLoading } = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${period ? `?period=${period}` : ''}`, fetcher)
 
   const chartOptions = useMemo(() => ({
     maintainAspectRatio: false,
@@ -36,7 +37,7 @@ export default function DownloadGraph({ packageName, period }: DownloadGraphProp
         display: true,
         title: {
           display: true,
-          text: 'Downloads'
+          text: 'Downloads',
         },
         beginAtZero: true,
       },
@@ -46,10 +47,11 @@ export default function DownloadGraph({ packageName, period }: DownloadGraphProp
   const [chartData, setChartData] = useState<ChartData<'line'> | undefined>()
 
   useEffect(() => {
-    if (!data) return;
+    if (!data)
+      return
 
-    const labels = data.downloads.map(v => v.day);
-    const downloads = data.downloads.map(v => v.downloads);
+    const labels = data.downloads.map(v => v.day)
+    const downloads = data.downloads.map(v => v.downloads)
 
     setChartData({
       labels,
@@ -64,16 +66,22 @@ export default function DownloadGraph({ packageName, period }: DownloadGraphProp
         },
       ],
     })
-  }, [data, packageName]);
+  }, [data, packageName])
 
   return (
     <div className="flex justify-center h-[200px]">
       {
-        isLoading ?
-          <Spinner /> :
-        error ?
-          <div className='text-red-500'>Failed to load data {JSON.stringify(error.message)}</div> :
-        chartData && <Line data={chartData} options={chartOptions}/> }
+        isLoading
+          ? <Spinner />
+          : error
+            ? (
+                <div className="text-red-500">
+                  Failed to load data
+                  {JSON.stringify(error.message)}
+                </div>
+              )
+            : chartData && <Line data={chartData} options={chartOptions} />
+      }
     </div>
-  );
+  )
 }

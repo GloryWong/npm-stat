@@ -1,22 +1,22 @@
 {
   "name": "npm-stat",
+  "type": "module",
   "version": "0.1.7",
   "private": true,
   "description": "NPM package status",
-  "keywords": [],
-  "homepage": "https://github.com/GloryWong/npm-stat#readme",
-  "bugs": "https://github.com/GloryWong/npm-stat/issues",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/github:GloryWong/npm-stat"
-  },
-  "license": "MIT",
   "author": {
     "name": "GloryWong",
     "email": "glorywong1001@gmail.com",
     "url": "https://glorywong.com"
   },
-  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/GloryWong/npm-stat#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/github:GloryWong/npm-stat"
+  },
+  "bugs": "https://github.com/GloryWong/npm-stat/issues",
+  "keywords": [],
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -25,13 +25,6 @@
     "prepare": "pnpm simple-git-hooks && pnpm msw init",
     "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "simple-git-hooks": {
-    "commit-msg": "pnpm commitlint --edit ${1}",
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "pnpm lint:fix"
   },
   "dependencies": {
     "@gloxy/logger": "^2.2.2",
@@ -49,6 +42,7 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.27.3",
     "@commitlint/cli": "^19.4.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@eslint/compat": "^1.1.1",
@@ -59,7 +53,7 @@
     "@types/node": "^20.16.1",
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
-    "eslint": "^9.9.0",
+    "eslint": "^9.9.1",
     "eslint-config-next": "14.2.6",
     "eslint-plugin-package-json": "^0.15.2",
     "eslint-plugin-react-hooks": "^4.6.2",
@@ -75,6 +69,13 @@
   },
   "overrides": {
     "eslint": "^9.9.0"
+  },
+  "simple-git-hooks": {
+    "commit-msg": "pnpm commitlint --edit ${1}",
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "pnpm lint:fix"
   },
   "msw": {
     "workerDirectory": [

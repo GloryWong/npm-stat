@@ -1,9 +1,9 @@
-import { DownloadData, Period } from "@/components/DownloadGraph";
-import { Package } from "@/components/PackageList";
-
-import { faker } from "@faker-js/faker";
-import { periods } from "@/components/DownloadGraphs";
-import { timestamp } from "iso-timestamp";
+import { faker } from '@faker-js/faker'
+import { timestamp } from 'iso-timestamp'
+import type { DownloadData, Period } from '@/components/DownloadGraph'
+import type { Package } from '@/components/PackageList'
+import { periods } from '@/components/DownloadGraphs'
+import { logger } from '@/utils/logger'
 
 faker.seed(123)
 
@@ -13,12 +13,12 @@ function createArrayOf<T>(fn: (index: number) => T, length: number) {
 
 function createPackages(pkgNum: number) {
   const packageNames = createArrayOf(() => faker.word.sample(), pkgNum)
-  
-  const packages: Package[] = createArrayOf((index) => ({
-      name: packageNames[index],
-      version: faker.string.numeric(3).split('').join('.'),
-      description: faker.lorem.paragraph({ min: 1, max: 3 })
-    }), packageNames.length)
+
+  const packages: Package[] = createArrayOf(index => ({
+    name: packageNames[index],
+    version: faker.string.numeric(3).split('').join('.'),
+    description: faker.lorem.paragraph({ min: 1, max: 3 }),
+  }), packageNames.length)
 
   return packages
 }
@@ -28,7 +28,7 @@ function skipDate(startDate: Date, numDays: number) {
 }
 
 function createDateRanges(startDate: Date, numDays: number) {
-  return createArrayOf((i) => skipDate(startDate, i), numDays)
+  return createArrayOf(i => skipDate(startDate, i), numDays)
 }
 
 function createDownloadData(name: string, start: string, numDays: number): DownloadData {
@@ -36,10 +36,10 @@ function createDownloadData(name: string, start: string, numDays: number): Downl
     start,
     end: skipDate(new Date(start), numDays),
     package: name,
-    downloads: createDateRanges(new Date(start), numDays).map((day) => ({
+    downloads: createDateRanges(new Date(start), numDays).map(day => ({
       downloads: faker.number.int({ min: 0, max: 100 }),
-      day
-    }))
+      day,
+    })),
   }
 }
 
@@ -50,7 +50,7 @@ function createDownloadsDataset(name: string) {
   return periods.reduce((pre, cur) => {
     return {
       ...pre,
-      [cur]: createDownloadData(name, startDate, periodToNumDays[cur])
+      [cur]: createDownloadData(name, startDate, periodToNumDays[cur]),
     }
   }, {} as Record<Period, DownloadData>)
 }
@@ -62,18 +62,18 @@ function createUserNames(num: number) {
 function createUserPackageSets(userNames: string[]) {
   return userNames.reduce((pre, cur) => ({
     ...pre,
-    [cur]: createPackages(faker.number.int({ min: 1, max: 20 }))
+    [cur]: createPackages(faker.number.int({ min: 1, max: 20 })),
   }), {} as Record<string, Package[]>)
 }
 
 const userNames = createUserNames(3)
-console.log('Created user names', userNames)
+logger.info('Created user names', userNames)
 const packageSets = createUserPackageSets(userNames)
 
 const downloadDatasets = Object.values(packageSets).flat(2).map(v => v.name).reduce((pre, cur) => {
   return {
     ...pre,
-    [cur]: createDownloadsDataset(cur)
+    [cur]: createDownloadsDataset(cur),
   }
 }, {} as Record<string, Record<Period, DownloadData>>)
 
