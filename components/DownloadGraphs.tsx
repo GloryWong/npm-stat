@@ -1,6 +1,6 @@
 import { Tab, Tabs } from "@nextui-org/react"
 import DownloadGraph, { DownloadGraphProps, type Period } from "./DownloadGraph"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 
 interface DownloadGraphsProps extends DownloadGraphProps {
   onPeriodChange?: (period: Period) => void
@@ -9,9 +9,9 @@ interface DownloadGraphsProps extends DownloadGraphProps {
 export const periods: Period[] = ['last-week', 'last-month', 'last-year']
 
 export default function DownloadGraphs({ packageName, period = 'last-week', onPeriodChange }: DownloadGraphsProps) {
-  const items = useMemo(() => periods.map(v => ({ period: v })), [periods])
+  const items = periods.map(v => ({ period: v }))
   const [selected, setSelected] = useState(period)
-
+  
   useEffect(() => {
     if (onPeriodChange)
       onPeriodChange(selected)
