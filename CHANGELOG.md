@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.4...npm-stat-v0.1.5) (2024-08-27)
+
+
+### Bug Fixes
+
+* should update graph after select new package ([d69b13d](https://github.com/GloryWong/npm-stat/commit/d69b13dda18085931150bae62c2d669e2abea454))
+
 ## [0.1.4](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.3...npm-stat-v0.1.4) (2024-08-26)
 
 
