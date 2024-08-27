@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker'
 import { timestamp } from 'iso-timestamp'
-import type { DownloadData, Period } from '@/components/DownloadGraph'
+import type { DownloadData } from '@/components/DownloadGraph'
 import type { Package } from '@/components/PackageList'
-import { periods } from '@/components/DownloadGraphs'
 import { logger } from '@/utils/logger'
+import type { Period } from '@/constants/periods'
+import { periods } from '@/constants/periods'
 
 faker.seed(123)
 
