@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.6...npm-stat-v0.1.7) (2024-08-27)
+
+
+### Bug Fixes
+
+* **tabs:** use the key to trigger re-render ([3d21b12](https://github.com/GloryWong/npm-stat/commit/3d21b126179ec5d571849916a7e181074a5f2e0d))
+
 ## [0.1.6](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.5...npm-stat-v0.1.6) (2024-08-27)
 
 
