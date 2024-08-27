@@ -1,12 +1,13 @@
 import { Tab, Tabs } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
-import DownloadGraph, { type DownloadGraphProps, type Period } from './DownloadGraph'
+import DownloadGraph, { type DownloadGraphProps } from './DownloadGraph'
+import type { Period } from '@/constants/periods'
+import { periods } from '@/constants/periods'
 
 interface DownloadGraphsProps extends DownloadGraphProps {
   onPeriodChange?: (period: Period) => void
 }
 
-export const periods: Period[] = ['last-week', 'last-month', 'last-year']
 const items = periods.map(v => ({ period: v }))
 
 export default function DownloadGraphs({ packageName, period = 'last-week', onPeriodChange }: DownloadGraphsProps) {

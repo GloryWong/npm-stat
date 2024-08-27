@@ -28,7 +28,7 @@ export default function Home() {
 
         return val
       })
-    }, [searchParams, setSearchParams, key, value])
+    }, [key, value])
   }
 
   useUpdateSearchParam('packageName', packageName)

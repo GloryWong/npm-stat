@@ -28,27 +28,27 @@ export default function PakcageList({ userName, onSelect }: { userName: string, 
             : (
                 <div className="w-full flex-grow min-h-0">
                   <ScrollShadow size={80} className="h-full">
-                    <Listbox aria-label="Package list" variant="bordered" onAction={onSelect} selectionMode="single">
+                    <Listbox aria-label="Package list" items={data} variant="bordered" onAction={onSelect} selectionMode="single">
                       {
-                        (data ?? []).map(v => (
+                        item => (
                           <ListboxItem
-                            key={v.name}
-                            textValue={v.name}
+                            key={item.name}
+                            textValue={item.name}
                             title={(
                               <div className="flex items-center gap-2">
-                                <span className="font-bold text-lg text-wrap">{v.name}</span>
-                                <Chip variant="flat" size="sm">{v.version}</Chip>
+                                <span className="font-bold text-lg text-wrap">{item.name}</span>
+                                <Chip variant="flat" size="sm">{item.version}</Chip>
                               </div>
                             )}
-                            description={v.description}
+                            description={item.description}
                             endContent={(
-                              <Tooltip content={`Go to the package ${v.name} in npm`} delay={200}>
-                                <Link className="text-gray-500" isExternal showAnchorIcon anchorIcon={<Icon icon="mdi:launch" />} href={`https://www.npmjs.com/package/${v.name}`} />
+                              <Tooltip content={`Go to the package ${item.name} in npm`} delay={200}>
+                                <Link className="text-gray-500" isExternal showAnchorIcon anchorIcon={<Icon icon="mdi:launch" />} href={`https://www.npmjs.com/package/${item.name}`} />
                               </Tooltip>
                             )}
                           >
                           </ListboxItem>
-                        ))
+                        )
                       }
                     </Listbox>
                   </ScrollShadow>

@@ -2,5 +2,11 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>GloryWong/renovate-config:npm"
+  ],
+  "packageRules": [
+    {
+      "matchPackageName": ["eslint"],
+      "allowedVersions": "8.57.0"
+    }
   ]
 }

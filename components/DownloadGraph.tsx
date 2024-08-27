@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import useSWR from 'swr'
 import { fetcher } from '@/utils/fetcher'
+import type { Period } from '@/constants/periods'
 
 Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, LinearScale, Filler, Title, Tooltip, Legend)
 
@@ -15,8 +16,6 @@ export interface DownloadData {
   end: string
   package: string
 }
-
-export type Period = 'last-week' | 'last-month' | 'last-year'
 
 export interface DownloadGraphProps {
   packageName: string

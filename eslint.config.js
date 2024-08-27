@@ -5,6 +5,7 @@ const compat = new FlatCompat()
 
 // https://eslint.vuejs.org/rules/
 export default await antfu({
+  react: true,
   rules: {
     'node/prefer-global/process': 'off',
     'no-unused-vars': 'off',
