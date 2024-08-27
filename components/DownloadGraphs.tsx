@@ -7,9 +7,9 @@ interface DownloadGraphsProps extends DownloadGraphProps {
 }
 
 export const periods: Period[] = ['last-week', 'last-month', 'last-year']
+const items = periods.map(v => ({ period: v }))
 
 export default function DownloadGraphs({ packageName, period = 'last-week', onPeriodChange }: DownloadGraphsProps) {
-  const items = periods.map(v => ({ period: v }))
   const [selected, setSelected] = useState(period)
   
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function DownloadGraphs({ packageName, period = 'last-week', onPe
 
   return (
     <div className="w-full h-[300px]">
-      <Tabs aria-label="Period options" variant="underlined" selectedKey={selected} onSelectionChange={(key) => setSelected(key as Period)} items={items}>
+      <Tabs aria-label="Period options" key={packageName} variant="underlined" selectedKey={selected} onSelectionChange={(key) => setSelected(key as Period)} items={items}>
         {({ period }) => (
           <Tab key={period} title={period}>
             <DownloadGraph packageName={packageName} period={period} />
