@@ -45,8 +45,6 @@ export default function Home() {
   return (
     <SWRConfig
       value={{
-        revalidateOnFocus: false,
-        keepPreviousData: true,
         fetcher,
       }}
     >
