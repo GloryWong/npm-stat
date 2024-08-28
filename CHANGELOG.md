@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.8...npm-stat-v0.1.9) (2024-08-28)
+
+
+### Features
+
+* add package info ([c8f6195](https://github.com/GloryWong/npm-stat/commit/c8f61956a95314cd5288399f57c5e52488973c6c))
+
 ## [0.1.8](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.7...npm-stat-v0.1.8) (2024-08-28)
 
 
