@@ -1,6 +1,6 @@
 import { HttpResponse, http } from 'msw'
 import { downloadDatasets, packageSets } from './data'
-import type { Period } from '@/components/DownloadGraph'
+import type { Period } from '@/constants/periods'
 
 export const handlers = [
   http.get('/api/packages/:userName', ({ params }) => {

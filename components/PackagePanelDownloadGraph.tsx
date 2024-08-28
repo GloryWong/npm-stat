@@ -63,7 +63,7 @@ export default function PackagePanelDownloadGraph({ packageName, period }: Packa
         },
       ],
     })
-  }, [data, packageName])
+  }, [data, period, packageName])
 
   return (
     <div className="flex justify-center h-[200px]">

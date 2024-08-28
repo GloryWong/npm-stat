@@ -15,7 +15,7 @@ export default function SelectionPanelSearch({ defaultInput = '', onConfirmInput
 
   const confirmInput = useCallback(() => {
     onConfirmInput(input)
-  }, [input])
+  }, [onConfirmInput, input])
 
   return (
     <div className="flex gap-2">
