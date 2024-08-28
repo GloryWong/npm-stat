@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.8](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.7...npm-stat-v0.1.8) (2024-08-28)
+
+
+### Bug Fixes
+
+* import period in mock data ([205207d](https://github.com/GloryWong/npm-stat/commit/205207d01318120357ac5cd57d69741c167507b9))
+* memoize fetched result ([e3e8c06](https://github.com/GloryWong/npm-stat/commit/e3e8c06b190bafc41c14b935b75c9a965e2b01b6))
+* selected status ([fb6331b](https://github.com/GloryWong/npm-stat/commit/fb6331bb999412d846995a9030b65d056e460418))
+* types ([9143699](https://github.com/GloryWong/npm-stat/commit/9143699742623ace57f28be8a7f7afd6ff283462))
+
 ## [0.1.7](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.6...npm-stat-v0.1.7) (2024-08-27)
 
 
