@@ -20,7 +20,7 @@ export default function DownloadGraphs({ packageName, period = 'last-week', onPe
 
   return (
     <div className="w-full h-[300px]">
-      <Tabs aria-label="Period options" key={packageName} variant="underlined" selectedKey={selected} onSelectionChange={key => setSelected(key as Period)} items={items}>
+      <Tabs aria-label="Period options" key={packageName} variant="underlined" fullWidth selectedKey={selected} onSelectionChange={key => setSelected(key as Period)} items={items}>
         {({ period }) => (
           <Tab key={period} title={period}>
             <DownloadGraph packageName={packageName} period={period} />

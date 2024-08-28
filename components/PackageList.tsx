@@ -1,7 +1,8 @@
 import { Chip, Link, Listbox, ListboxItem, ScrollShadow, Spinner, Tooltip } from '@nextui-org/react'
-import type { Key } from 'react'
 import useSWR from 'swr'
 import { Icon } from '@iconify/react'
+import { useState } from 'react'
+import type { Key } from '@react-types/shared'
 
 export interface Package {
   name: string
@@ -9,8 +10,10 @@ export interface Package {
   description: string
 }
 
-export default function PakcageList({ userName, onSelect }: { userName: string, onSelect: (name: Key) => void }) {
+export default function PakcageList({ userName, onSelect, packageName }: { userName: string, packageName?: string, onSelect: (packageName: string) => void }) {
   const { data, error, isLoading } = useSWR<Package[]>(`/api/packages/${userName}`)
+
+  const [selectedKeys, setSelectedKeys] = useState(new Set<Key>(packageName ? [packageName] : []))
 
   return (
     <div className="w-full h-full flex justify-center">
@@ -27,7 +30,18 @@ export default function PakcageList({ userName, onSelect }: { userName: string, 
             : (
                 <div className="w-full flex-grow min-h-0">
                   <ScrollShadow size={80} className="h-full">
-                    <Listbox aria-label="Package list" items={data} variant="bordered" onAction={onSelect} selectionMode="single">
+                    <Listbox
+                      aria-label="Package list"
+                      items={data}
+                      variant="bordered"
+                      disallowEmptySelection
+                      selectionMode="single"
+                      selectedKeys={selectedKeys}
+                      onSelectionChange={(keys) => {
+                        onSelect(Array.from(keys)[0].toString())
+                        setSelectedKeys(new Set(keys))
+                      }}
+                    >
                       {
                         item => (
                           <ListboxItem

@@ -72,7 +72,7 @@ export default function Home() {
               userName
                 ? (
                     <Suspense fallback={<Spinner />}>
-                      <PackageList userName={userName} onSelect={name => setPackageName(name as string)} />
+                      <PackageList userName={userName} packageName={packageName} onSelect={setPackageName} />
                     </Suspense>
                   )
                 : (
@@ -85,19 +85,24 @@ export default function Home() {
           </div>
         </div>
         <Divider orientation="vertical" />
-        <div className="flex-1 min-w-0 p-4 flex justify-center">
-          { packageName
-            ? (
-                <Suspense fallback={<Spinner />}>
-                  <DownloadGraphs packageName={packageName} period={period} onPeriodChange={setPeriod} />
-                </Suspense>
-              )
-            : (
-                <div className="flex items-center gap-2">
-                  <Icon icon="fa6-regular:hand-point-left" />
-                  Select a package in the package lists
-                </div>
-              )}
+        <div className="flex-1 min-w-0 p-4 flex flex-col items-center">
+          <div className="flex justify-center py-3">
+            { packageName }
+          </div>
+          <div className="w-full flex-grow min-h-0 flex justify-center">
+            { packageName
+              ? (
+                  <Suspense fallback={<Spinner />}>
+                    <DownloadGraphs packageName={packageName} period={period} onPeriodChange={setPeriod} />
+                  </Suspense>
+                )
+              : (
+                  <div className="flex items-center gap-2">
+                    <Icon icon="fa6-regular:hand-point-left" />
+                    Select a package in the package lists
+                  </div>
+                )}
+          </div>
         </div>
       </div>
     </SWRConfig>
