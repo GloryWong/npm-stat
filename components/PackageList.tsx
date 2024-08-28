@@ -2,7 +2,6 @@ import { Chip, Link, Listbox, ListboxItem, ScrollShadow, Spinner, Tooltip } from
 import type { Key } from 'react'
 import useSWR from 'swr'
 import { Icon } from '@iconify/react'
-import { fetcher } from '@/utils/fetcher'
 
 export interface Package {
   name: string
@@ -11,7 +10,7 @@ export interface Package {
 }
 
 export default function PakcageList({ userName, onSelect }: { userName: string, onSelect: (name: Key) => void }) {
-  const { data, error, isLoading } = useSWR<Package[]>(`/api/packages/${userName}`, fetcher)
+  const { data, error, isLoading } = useSWR<Package[]>(`/api/packages/${userName}`)
 
   return (
     <div className="w-full h-full flex justify-center">

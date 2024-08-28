@@ -2,10 +2,9 @@
 import { Spinner } from '@nextui-org/react'
 import type { ChartData } from 'chart.js'
 import { CategoryScale, Chart, Filler, Legend, LineController, LineElement, LinearScale, PointElement, Title, Tooltip } from 'chart.js'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import useSWR from 'swr'
-import { fetcher } from '@/utils/fetcher'
 import type { Period } from '@/constants/periods'
 
 Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, LinearScale, Filler, Title, Tooltip, Legend)
@@ -22,37 +21,35 @@ export interface DownloadGraphProps {
   period?: Period
 }
 
-export default function DownloadGraph({ packageName, period }: DownloadGraphProps) {
-  const { data, error, isLoading } = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${period ? `?period=${period}` : ''}`, fetcher)
-
-  const chartOptions = useMemo(() => ({
-    maintainAspectRatio: false,
-    responsive: true,
-    interaction: {
-      intersect: false,
-    },
-    scales: {
-      y: {
+const chartOptions = {
+  maintainAspectRatio: false,
+  responsive: true,
+  interaction: {
+    intersect: false,
+  },
+  scales: {
+    y: {
+      display: true,
+      title: {
         display: true,
-        title: {
-          display: true,
-          text: 'Downloads',
-        },
-        beginAtZero: true,
+        text: 'Downloads',
       },
+      beginAtZero: true,
     },
-  }), [])
+  },
+}
 
-  const [chartData, setChartData] = useState<ChartData<'line'> | undefined>()
+export default function DownloadGraph({ packageName, period }: DownloadGraphProps) {
+  const { data, error, isLoading } = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${period ? `?period=${period}` : ''}`)
 
-  useEffect(() => {
+  const chartData = useMemo<ChartData<'line'> | undefined>(() => {
     if (!data)
       return
 
     const labels = data.downloads.map(v => v.day)
     const downloads = data.downloads.map(v => v.downloads)
 
-    setChartData({
+    return ({
       labels,
       datasets: [
         {
