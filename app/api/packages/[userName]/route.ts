@@ -1,9 +1,8 @@
 import ky from 'ky'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { userName } = req.query
-
+export async function GET(_: NextRequest, { params: { userName } }: { params: { userName: string } }) {
   try {
     // https://registry.npmjs.org/-/v1/search?text=author:gloxy
     const data = await ky.get<any>(
@@ -19,9 +18,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     })
 
-    res.status(200).json(packages)
+    return NextResponse.json(packages)
   }
   catch (error) {
-    res.status(500).json({ error: `Failed to fetch data. ${error}` })
+    return NextResponse.json({ error: `Failed to fetch data. ${error}` }, { status: 500 })
   }
 }

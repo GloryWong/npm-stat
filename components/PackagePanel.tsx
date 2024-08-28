@@ -1,17 +1,15 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Spinner } from '@nextui-org/react'
 import { Suspense, lazy } from 'react'
-import type { Period } from '@/constants/periods'
+import PackagePanelInfo from './PackagePanelInfo'
+import type { Period } from '@/types/period'
 
 const PackagePanelDownloadGraphs = lazy(() => import('@/components/PackagePanelDownloadGraphs'))
 
 export default function PackagePanel({ packageName, period, onPeriodChange }: { packageName?: string, period: Period, onPeriodChange: (period: Period) => void }) {
   return (
-    <div className="h-full p-4 flex flex-col items-center">
-      <div className="flex justify-center py-3">
-        { packageName }
-      </div>
-      <div className="w-full flex-grow min-h-0 flex justify-center">
+    <div className="h-full w-full p-4 flex flex-col items-center gap-4">
+      <div className="w-full flex justify-center h-[300px]">
         { packageName
           ? (
               <Suspense fallback={<Spinner />}>
@@ -24,6 +22,9 @@ export default function PackagePanel({ packageName, period, onPeriodChange }: { 
                 Select a package in the package lists
               </div>
             )}
+      </div>
+      <div className="w-full flex-grow min-h-0">
+        { packageName && <PackagePanelInfo packageName={packageName} /> }
       </div>
     </div>
   )

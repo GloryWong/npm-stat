@@ -5,11 +5,11 @@ import { CategoryScale, Chart, Filler, Legend, LineController, LineElement, Line
 import { useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
 import useSWR from 'swr'
-import type { Period } from '@/constants/periods'
+import type { Period } from '@/types/period'
 
 Chart.register(CategoryScale, LinearScale, LineController, LineElement, PointElement, LinearScale, Filler, Title, Tooltip, Legend)
 
-export interface DownloadData {
+export interface PackagePanelDownloadData {
   downloads: { day: string, downloads: number }[]
   start: string
   end: string
@@ -40,7 +40,7 @@ const chartOptions = {
 }
 
 export default function PackagePanelDownloadGraph({ packageName, period }: PackagePanelDownloadGraphProps) {
-  const { data, error, isLoading } = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${period ? `?period=${period}` : ''}`)
+  const { data, error, isLoading } = useSWR<PackagePanelDownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${period ? `?period=${period}` : ''}`)
 
   const chartData = useMemo<ChartData<'line'> | undefined>(() => {
     if (!data)
@@ -66,7 +66,7 @@ export default function PackagePanelDownloadGraph({ packageName, period }: Packa
   }, [data, period, packageName])
 
   return (
-    <div className="flex justify-center h-[200px]">
+    <div className="flex justify-center h-full">
       {
         isLoading
           ? <Spinner />

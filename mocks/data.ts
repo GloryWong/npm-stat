@@ -1,10 +1,12 @@
 import { faker } from '@faker-js/faker'
 import { timestamp } from 'iso-timestamp'
-import type { DownloadData } from '@/components/PackagePanelDownloadGraph'
+import type { PackageJson } from 'type-fest'
+import type { PackagePanelDownloadData } from '@/components/PackagePanelDownloadGraph'
 import { logger } from '@/utils/logger'
-import type { Period } from '@/constants/periods'
+
 import { periods } from '@/constants/periods'
-import type { Package } from '@/components/SelectionPanelResult'
+import type { PackageBasic } from '@/types/package'
+import type { Period } from '@/types/period'
 
 faker.seed(123)
 
@@ -12,12 +14,16 @@ function createArrayOf<T>(fn: (index: number) => T, length: number) {
   return Array.from({ length }).map((_, index) => fn(index))
 }
 
+function createRandomVersion() {
+  return faker.string.numeric(3).split('').join('.')
+}
+
 function createPackages(pkgNum: number) {
   const packageNames = createArrayOf(() => faker.word.sample(), pkgNum)
 
-  const packages: Package[] = createArrayOf(index => ({
+  const packages: PackageBasic[] = createArrayOf(index => ({
     name: packageNames[index],
-    version: faker.string.numeric(3).split('').join('.'),
+    version: createRandomVersion(),
     description: faker.lorem.paragraph({ min: 1, max: 3 }),
   }), packageNames.length)
 
@@ -32,13 +38,13 @@ function createDateRanges(startDate: Date, numDays: number) {
   return createArrayOf(i => skipDate(startDate, i), numDays)
 }
 
-function createDownloadData(name: string, start: string, numDays: number): DownloadData {
+function createDownloadData(name: string, start: string, numDays: number): PackagePanelDownloadData {
   return {
     start,
     end: skipDate(new Date(start), numDays),
     package: name,
     downloads: createDateRanges(new Date(start), numDays).map(day => ({
-      downloads: faker.number.int({ min: 0, max: 100 }),
+      downloads: faker.number.int({ min: 0, max: faker.number.int({ min: 100, max: 1000000 }) }),
       day,
     })),
   }
@@ -53,29 +59,57 @@ function createDownloadsDataset(name: string) {
       ...pre,
       [cur]: createDownloadData(name, startDate, periodToNumDays[cur]),
     }
-  }, {} as Record<Period, DownloadData>)
+  }, {} as Record<Period, PackagePanelDownloadData>)
 }
 
 function createUserNames(num: number) {
   return createArrayOf(() => faker.word.noun(5), num)
 }
 
-function createUserPackageSets(userNames: string[]) {
+function createUserPackageBasicSets(userNames: string[]) {
   return userNames.reduce((pre, cur) => ({
     ...pre,
     [cur]: createPackages(faker.number.int({ min: 1, max: 20 })),
-  }), {} as Record<string, Package[]>)
+  }), {} as Record<string, PackageBasic[]>)
 }
 
 const userNames = createUserNames(3)
 logger.info('Created user names', userNames)
-const packageSets = createUserPackageSets(userNames)
+const packageBasicSets = createUserPackageBasicSets(userNames)
 
-const downloadDatasets = Object.values(packageSets).flat(2).map(v => v.name).reduce((pre, cur) => {
+const downloadDatasets = Object.values(packageBasicSets).flat(2).map(v => v.name).reduce((pre, cur) => {
   return {
     ...pre,
     [cur]: createDownloadsDataset(cur),
   }
-}, {} as Record<string, Record<Period, DownloadData>>)
+}, {} as Record<string, Record<Period, PackagePanelDownloadData>>)
 
-export { packageSets, downloadDatasets }
+const packageBasicSetsFlat = Object.values(packageBasicSets).flat(2)
+
+function createRandomDeps(num: number) {
+  return createArrayOf(() => ({ [faker.word.noun({ length: { min: 3, max: 10 } })]: createRandomVersion() }), num)
+    .reduce((pre, cur) => ({
+      ...pre,
+      ...cur,
+    }), {})
+}
+const packageInfo: PackageJson = {
+  type: 'module',
+  author: {
+    name: 'Author name',
+    email: 'authorname@gmail.com',
+    url: 'https://authorname.com',
+  },
+  license: 'MIT',
+  homepage: 'https://authorname.com',
+  repository: {
+    type: 'git',
+    url: 'git+https://github.com/authorname/package-name.git',
+  },
+  keywords: createArrayOf(() => faker.word.noun({ length: { min: 3, max: 10 } }), 10),
+  types: 'index.d.ts',
+  dependencies: createRandomDeps(5),
+  devDependencies: createRandomDeps(10),
+}
+
+export { packageBasicSets, downloadDatasets, packageBasicSetsFlat, packageInfo }

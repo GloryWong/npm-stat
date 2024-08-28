@@ -1,8 +1,8 @@
 import { Tab, Tabs } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import PackagePanelDownloadGraph, { type PackagePanelDownloadGraphProps } from './PackagePanelDownloadGraph'
-import type { Period } from '@/constants/periods'
 import { periods } from '@/constants/periods'
+import type { Period } from '@/types/period'
 
 interface DownloadGraphsProps extends PackagePanelDownloadGraphProps {
   onPeriodChange?: (period: Period) => void
@@ -19,7 +19,7 @@ export default function PackagePanelDownloadGraphs({ packageName, period = 'last
   }, [selected, onPeriodChange])
 
   return (
-    <div className="w-full h-[300px]">
+    <div className="w-full">
       <Tabs aria-label="Period options" key={packageName} variant="underlined" fullWidth selectedKey={selected} onSelectionChange={key => setSelected(key as Period)} items={items}>
         {({ period }) => (
           <Tab key={period} title={period}>

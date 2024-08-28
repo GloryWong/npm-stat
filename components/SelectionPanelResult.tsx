@@ -3,15 +3,10 @@ import useSWR from 'swr'
 import { Icon } from '@iconify/react'
 import { useState } from 'react'
 import type { Key } from '@react-types/shared'
-
-export interface Package {
-  name: string
-  version: string
-  description: string
-}
+import type { PackageBasic } from '@/types/package'
 
 export default function SelectionPanelResult({ userName, onSelect, packageName }: { userName: string, packageName?: string, onSelect: (packageName: string) => void }) {
-  const { data, error, isLoading } = useSWR<Package[]>(`/api/packages/${userName}`)
+  const { data, error, isLoading } = useSWR<PackageBasic[]>(`/api/packages/${userName}`)
 
   const [selectedKeys, setSelectedKeys] = useState(new Set<Key>(packageName ? [packageName] : []))
 

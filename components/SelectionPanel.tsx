@@ -14,7 +14,7 @@ const SelectionPanelResult = lazy(() => import('@/components/SelectionPanelResul
 
 export default function SelectionPanel({ userName, packageName, onSelectPackage, onConfirmInput }: Props) {
   return (
-    <div className="h-full p-4 flex flex-col gap-4">
+    <div className="h-full w-full p-4 flex flex-col gap-4">
       <SelectionPanelSearch {...{ defaultInput: userName, onConfirmInput }} />
       <div className="flex-grow min-h-0 flex justify-center">
         {
