@@ -29,9 +29,7 @@ export default function RootLayout({
           </Providers>
         </div>
         <Divider />
-        <div className="py-2 px-4">
-          <Footer />
-        </div>
+        <Footer />
       </body>
     </html>
   )

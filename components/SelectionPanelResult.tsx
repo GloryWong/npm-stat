@@ -10,7 +10,7 @@ export interface Package {
   description: string
 }
 
-export default function PakcageList({ userName, onSelect, packageName }: { userName: string, packageName?: string, onSelect: (packageName: string) => void }) {
+export default function SelectionPanelResult({ userName, onSelect, packageName }: { userName: string, packageName?: string, onSelect: (packageName: string) => void }) {
   const { data, error, isLoading } = useSWR<Package[]>(`/api/packages/${userName}`)
 
   const [selectedKeys, setSelectedKeys] = useState(new Set<Key>(packageName ? [packageName] : []))

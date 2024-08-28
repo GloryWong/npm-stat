@@ -16,7 +16,7 @@ export interface DownloadData {
   package: string
 }
 
-export interface DownloadGraphProps {
+export interface PackagePanelDownloadGraphProps {
   packageName: string
   period?: Period
 }
@@ -39,7 +39,7 @@ const chartOptions = {
   },
 }
 
-export default function DownloadGraph({ packageName, period }: DownloadGraphProps) {
+export default function PackagePanelDownloadGraph({ packageName, period }: PackagePanelDownloadGraphProps) {
   const { data, error, isLoading } = useSWR<DownloadData>(`/api/downloads/${encodeURIComponent(packageName)}${period ? `?period=${period}` : ''}`)
 
   const chartData = useMemo<ChartData<'line'> | undefined>(() => {
