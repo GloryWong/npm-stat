@@ -27,20 +27,22 @@ function Cell({ label, value, block }: { label: string, value: any, block?: bool
       <div className="text-gray-500 text-sm">{label}</div>
       <div className="flex gap-1 flex-wrap">
         {
-          Array.isArray(value)
-            ? value.map((v, index) => <Chip key={index}>{String(v)}</Chip>)
-            : typeof value === 'object'
-              ? Object.entries(value).map(([k, v], index) => (
-                <div className="flex rounded-xl overflow-hidden text-sm" key={index}>
-                  <span className="bg-gray-800 py-1 px-3">{k}</span>
-                  <span className="py-1 px-3 bg-gray-900 text-gray-500">
-                    {
-                      createLink(v, { className: 'text-sm text-gray-500' })
-                    }
-                  </span>
-                </div>
-              ))
-              : createLink(value, { className: 'text-gray-300', pathOnly: true })
+          value
+            ? (Array.isArray(value)
+                ? value.map((v, index) => <Chip className="bg-gray-800" key={index}>{String(v)}</Chip>)
+                : typeof value === 'object'
+                  ? Object.entries(value).map(([k, v], index) => (
+                    <div className="flex rounded-xl overflow-hidden text-sm" key={index}>
+                      <span className="bg-gray-800 py-1 px-3">{k}</span>
+                      <span className="py-1 px-3 bg-gray-900 text-gray-500">
+                        {
+                          createLink(v, { className: 'text-sm text-gray-500' })
+                        }
+                      </span>
+                    </div>
+                  ))
+                  : createLink(value, { className: 'text-gray-300', pathOnly: true }))
+            : <span className="text-gray-500 text-sm">----</span>
         }
       </div>
     </div>
