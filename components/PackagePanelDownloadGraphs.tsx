@@ -19,8 +19,19 @@ export default function PackagePanelDownloadGraphs({ packageName, period = 'last
   }, [selected, onPeriodChange])
 
   return (
-    <div className="w-full">
-      <Tabs aria-label="Period options" key={packageName} variant="underlined" fullWidth selectedKey={selected} onSelectionChange={key => setSelected(key as Period)} items={items}>
+    <div className="w-full h-full flex flex-col">
+      <Tabs
+        aria-label="Period options"
+        classNames={{
+          panel: 'flex-grow h-min-0',
+        }}
+        key={packageName}
+        variant="underlined"
+        fullWidth
+        selectedKey={selected}
+        onSelectionChange={key => setSelected(key as Period)}
+        items={items}
+      >
         {({ period }) => (
           <Tab key={period} title={period}>
             <PackagePanelDownloadGraph packageName={packageName} period={period} />

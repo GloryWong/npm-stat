@@ -8,8 +8,8 @@ const PackagePanelDownloadGraphs = lazy(() => import('@/components/PackagePanelD
 
 export default function PackagePanel({ packageName, period, onPeriodChange }: { packageName?: string, period: Period, onPeriodChange: (period: Period) => void }) {
   return (
-    <div className="h-full w-full p-4 flex flex-col items-center gap-4">
-      <div className="w-full flex justify-center h-[300px]">
+    <div className="h-full w-full p-4 flex flex-col gap-4">
+      <div className="w-full flex-shrink-0 h-[300px] flex justify-center items-center">
         { packageName
           ? (
               <Suspense fallback={<Spinner />}>
