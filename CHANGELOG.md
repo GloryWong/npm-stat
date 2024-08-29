@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.12](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.11...npm-stat-v0.1.12) (2024-08-29)
+
+
+### Bug Fixes
+
+* **package panel info:** create link for value with correct protocals ([af110ba](https://github.com/GloryWong/npm-stat/commit/af110ba0bebe256326d43a3bf32368e1f3a236f6))
+
 ## [0.1.11](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.10...npm-stat-v0.1.11) (2024-08-29)
 
 
