@@ -32,6 +32,7 @@
     "@nextui-org/react": "^2.4.6",
     "chart.js": "^4.4.4",
     "framer-motion": "^11.3.30",
+    "is-plain-obj": "^4.1.0",
     "ky": "^1.7.1",
     "memoizee": "^0.4.17",
     "next": "14.2.6",
