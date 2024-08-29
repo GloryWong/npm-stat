@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.10](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.9...npm-stat-v0.1.10) (2024-08-29)
+
+
+### Features
+
+* support text search by default ([fbc0a12](https://github.com/GloryWong/npm-stat/commit/fbc0a12c407ebe8b9fcee57612a7c6e51d1c1834))
+
+
+### Bug Fixes
+
+* **download graphs:** height ([58986df](https://github.com/GloryWong/npm-stat/commit/58986dfff6f18338e2573161ad2f61c28c663b52))
+* **package panel info:** empty value placeholder ([a09b845](https://github.com/GloryWong/npm-stat/commit/a09b84562543aab75b6872e2720b59644a017769))
+
 ## [0.1.9](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.8...npm-stat-v0.1.9) (2024-08-28)
 
 
