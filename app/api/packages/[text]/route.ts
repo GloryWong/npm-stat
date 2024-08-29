@@ -1,6 +1,7 @@
 import ky from 'ky'
 import { type NextRequest, NextResponse } from 'next/server'
 import type { SearchType } from '@/types/search-type'
+import type { PackageBasic } from '@/types/package'
 
 export async function GET(request: NextRequest, { params: { text } }: { params: { text: string } }) {
   try {
@@ -11,12 +12,16 @@ export async function GET(request: NextRequest, { params: { text } }: { params: 
       `https://registry.npmjs.org/-/v1/search?text=${searchType === 'text' ? '' : `${searchType}:`}${encodeURIComponent(text)}`,
     ).json()
 
-    const packages = data.objects.map((v: any) => {
+    const packages: PackageBasic[] = data.objects.map((v: any) => {
       const pkg = v.package
       return {
         name: pkg.name,
         version: pkg.version,
         description: pkg.description,
+        author: pkg?.author?.username,
+        publisher: pkg.publisher.username,
+        date: pkg.date,
+        npmLink: pkg.links.npm,
       }
     })
 

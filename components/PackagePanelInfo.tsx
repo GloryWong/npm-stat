@@ -27,7 +27,7 @@ function Cell({ label, value, block }: { label: string, value: any, block?: bool
       <div className="text-gray-500 text-sm">{label}</div>
       <div className="flex gap-1 flex-wrap">
         {
-          value
+          (value && Object.keys(value).length > 0)
             ? (Array.isArray(value)
                 ? value.map((v, index) => <Chip className="bg-gray-800" key={index}>{String(v)}</Chip>)
                 : typeof value === 'object'

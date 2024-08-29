@@ -27,13 +27,17 @@ function createRandomPackageName() {
   return `${scope}${name}`
 }
 
-function createPackages(pkgNum: number) {
+function createPackages(pkgNum: number, userName?: string) {
   const packageNames = createArrayOf(() => createRandomPackageName(), pkgNum)
 
   const packages: PackageBasic[] = createArrayOf(index => ({
     name: packageNames[index],
     version: createRandomVersion(),
     description: faker.lorem.paragraph({ min: 1, max: 3 }),
+    author: userName,
+    publisher: userName ?? faker.internet.userName(),
+    date: faker.date.anytime().toISOString(),
+    npmLink: `https://www.npmjs.com/package/${packageNames[index]}`,
   }), packageNames.length)
 
   return packages
@@ -76,9 +80,9 @@ function createUserNames(num: number) {
 }
 
 function createUserPackageBasicSets(userNames: string[]) {
-  return userNames.reduce((pre, cur) => ({
+  return [...userNames].reduce((pre, cur) => ({
     ...pre,
-    [cur]: createPackages(faker.number.int({ min: 1, max: 20 })),
+    [cur]: createPackages(faker.number.int({ min: 1, max: 20 }), cur),
   }), {} as { [userName: string]: PackageBasic[] })
 }
 
@@ -94,7 +98,7 @@ const downloadDatasets = Object.values(packageBasicSets).flat(2).map(v => v.name
   }
 }, {} as { [packageName: string]: Record<Period, PackagePanelDownloadData> })
 
-const packageBasicSetsFlat = Object.values(packageBasicSets).flat(2)
+const packageBasicSetsAll = [...Object.values(packageBasicSets).flat(), ...createArrayOf(() => createPackages(faker.number.int({ min: 1, max: 5 })), 3).flat()]
 
 function createRandomDeps(num: number) {
   return createArrayOf(() => ({ [faker.word.noun({ length: { min: 3, max: 10 } })]: createRandomVersion() }), num)
@@ -103,23 +107,37 @@ function createRandomDeps(num: number) {
       ...cur,
     }), {})
 }
-const packageInfo: PackageJson = {
-  type: 'module',
-  author: {
-    name: 'Author name',
-    email: 'authorname@gmail.com',
-    url: 'https://authorname.com',
-  },
-  license: 'MIT',
-  homepage: 'https://authorname.com',
-  repository: {
-    type: 'git',
-    url: 'git+https://github.com/authorname/package-name.git',
-  },
-  keywords: createArrayOf(() => faker.word.noun({ length: { min: 3, max: 10 } }), 10),
-  types: 'index.d.ts',
-  dependencies: createRandomDeps(5),
-  devDependencies: createRandomDeps(10),
+
+function createPackageInfo({ name, version, description, author }: PackageBasic) {
+  const packageInfo: PackageJson = {
+    name,
+    version,
+    description,
+    type: faker.helpers.arrayElement(['module', 'commonjs']),
+    ...(
+      author
+        ? { author: {
+            name: author,
+            email: faker.internet.email(),
+            url: faker.internet.url(),
+          } }
+        : {}
+    ),
+    license: 'MIT',
+    homepage: faker.internet.url(),
+    repository: {
+      type: 'git',
+      url: 'git+https://github.com/authorname/package-name.git',
+    },
+    keywords: createArrayOf(() => faker.word.noun({ length: { min: 3, max: 10 } }), 10),
+    ...(faker.datatype.boolean() ? { types: 'index.d.ts' } : {}),
+    ...(faker.datatype.boolean() ? { dependencies: createRandomDeps(faker.number.int(5)) } : {}),
+    ...(faker.datatype.boolean() ? { devDependencies: createRandomDeps(faker.number.int(10)) } : {}),
+  }
+
+  return packageInfo
 }
 
-export { packageBasicSets, downloadDatasets, packageBasicSetsFlat, packageInfo }
+const packageInfos = packageBasicSetsAll.map(createPackageInfo)
+
+export { packageBasicSets, downloadDatasets, packageBasicSetsAll, packageInfos }

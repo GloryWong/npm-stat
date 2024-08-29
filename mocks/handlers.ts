@@ -1,6 +1,6 @@
 import { HttpResponse, http } from 'msw'
 import Fuse from 'fuse.js'
-import { downloadDatasets, packageBasicSets, packageBasicSetsFlat, packageInfo } from './data'
+import { downloadDatasets, packageBasicSets, packageBasicSetsAll, packageInfos } from './data'
 import type { Period } from '@/types/period'
 import type { SearchType } from '@/types/search-type'
 
@@ -9,7 +9,7 @@ export const handlers = [
     const searchType = new URL(request.url).searchParams.get('type') as SearchType | null ?? 'text'
     const text = params.text as string
     if (searchType === 'text') {
-      const fuse = new Fuse(packageBasicSetsFlat, {
+      const fuse = new Fuse(packageBasicSetsAll, {
         keys: ['name', 'description'],
         threshold: 0.5,
       })
@@ -26,13 +26,8 @@ export const handlers = [
     return period ? HttpResponse.json(downloadDataset[period]) : HttpResponse.json(undefined, { status: 404 })
   }),
   http.get('/api/package/:packageName', ({ params }) => {
-    const basic = packageBasicSetsFlat.find(v => v.name === params.packageName)
-    if (!basic)
-      return HttpResponse.json(undefined, { status: 404 })
+    const packageInfo = packageInfos.find(v => v.name === params.packageName)
 
-    return HttpResponse.json({
-      ...basic,
-      ...packageInfo,
-    })
+    return packageInfo ? HttpResponse.json(packageInfo) : HttpResponse.json(undefined, { status: 404 })
   }),
 ]

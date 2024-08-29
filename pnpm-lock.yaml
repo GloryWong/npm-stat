@@ -50,6 +50,9 @@ importers:
       swr:
         specifier: ^2.2.5
         version: 2.2.5(react@18.3.1)
+      timeago.js:
+        specifier: ^4.0.2
+        version: 4.0.2
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^2.27.3
@@ -4141,6 +4144,9 @@ packages:
 
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
+
+  timeago.js@4.0.2:
+    resolution: {integrity: sha512-a7wPxPdVlQL7lqvitHGGRsofhdwtkoSXPGATFuSOA2i1ZNQEPLrGnj68vOp2sOJTCFAQVXPeNMX/GctBaO9L2w==}
 
   timers-ext@0.1.8:
     resolution: {integrity: sha512-wFH7+SEAcKfJpfLPkrgMPvvwnEtj8W4IurvEyrKsDleXnKLCDw71w8jltvfLa8Rm4qQxxT4jmDBYbJG/z7qoww==}
@@ -9821,6 +9827,8 @@ snapshots:
       any-promise: 1.3.0
 
   through@2.3.8: {}
+
+  timeago.js@4.0.2: {}
 
   timers-ext@0.1.8:
     dependencies:

@@ -18,6 +18,13 @@ export default function Home() {
   const [text, setText] = useState<string | undefined>(searchParams.get('text') ?? undefined)
   const [searchType, setSearchType] = useState<SearchType>(searchParams.get('searchType') as SearchType | null ?? 'text')
 
+  useEffect(() => {
+    setPackageName(searchParams.get('packageName') ?? undefined)
+    setPeriod(searchParams.get('period') as Period | null ?? 'last-week')
+    setText(searchParams.get('text') ?? undefined)
+    setSearchType(searchParams.get('searchType') as SearchType | null ?? 'text')
+  }, [searchParams])
+
   function useUpdateSearchParam(key: string, value?: string) {
     useEffect(() => {
       if (searchParams.get(key) === value)
