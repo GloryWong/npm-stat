@@ -8,7 +8,7 @@ import { periods } from '@/constants/periods'
 import type { PackageBasic } from '@/types/package'
 import type { Period } from '@/types/period'
 
-faker.seed(123)
+faker.seed(1234)
 
 function createArrayOf<T>(fn: (index: number) => T, length: number) {
   return Array.from({ length }).map((_, index) => fn(index))
@@ -18,8 +18,17 @@ function createRandomVersion() {
   return faker.string.numeric(3).split('').join('.')
 }
 
+function createRandomPackageName() {
+  const len = faker.number.int({ min: 1, max: 3 })
+  const scoped = faker.datatype.boolean()
+
+  const name = createArrayOf(() => faker.word.sample(), len).join('-')
+  const scope = scoped ? `@${faker.word.sample()}/` : ''
+  return `${scope}${name}`
+}
+
 function createPackages(pkgNum: number) {
-  const packageNames = createArrayOf(() => faker.word.sample(), pkgNum)
+  const packageNames = createArrayOf(() => createRandomPackageName(), pkgNum)
 
   const packages: PackageBasic[] = createArrayOf(index => ({
     name: packageNames[index],
@@ -63,18 +72,19 @@ function createDownloadsDataset(name: string) {
 }
 
 function createUserNames(num: number) {
-  return createArrayOf(() => faker.word.noun(5), num)
+  return createArrayOf(() => faker.internet.userName(), num)
 }
 
 function createUserPackageBasicSets(userNames: string[]) {
   return userNames.reduce((pre, cur) => ({
     ...pre,
     [cur]: createPackages(faker.number.int({ min: 1, max: 20 })),
-  }), {} as Record<string, PackageBasic[]>)
+  }), {} as { [userName: string]: PackageBasic[] })
 }
 
 const userNames = createUserNames(3)
 logger.info('Created user names', userNames)
+
 const packageBasicSets = createUserPackageBasicSets(userNames)
 
 const downloadDatasets = Object.values(packageBasicSets).flat(2).map(v => v.name).reduce((pre, cur) => {
@@ -82,7 +92,7 @@ const downloadDatasets = Object.values(packageBasicSets).flat(2).map(v => v.name
     ...pre,
     [cur]: createDownloadsDataset(cur),
   }
-}, {} as Record<string, Record<Period, PackagePanelDownloadData>>)
+}, {} as { [packageName: string]: Record<Period, PackagePanelDownloadData> })
 
 const packageBasicSetsFlat = Object.values(packageBasicSets).flat(2)
 

@@ -7,7 +7,7 @@ export async function GET(req: NextRequest, { params: { packageName } }: { param
 
   try {
     const data = await ky.get(
-      `https://api.npmjs.org/downloads/range/${period}/${packageName}`,
+      `https://api.npmjs.org/downloads/range/${period}/${encodeURIComponent(packageName)}`,
     ).json()
 
     return NextResponse.json(data)

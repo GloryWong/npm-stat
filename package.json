@@ -58,6 +58,7 @@
     "eslint-config-next": "14.2.6",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.11",
+    "fuse.js": "^7.0.0",
     "iso-timestamp": "^1.2.0",
     "lint-staged": "^15.2.9",
     "msw": "^2.3.5",

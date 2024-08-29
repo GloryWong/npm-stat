@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 export async function GET(_: NextRequest, { params: { packageName } }: { params: { packageName: string } }) {
   try {
     const data = await ky.get<Record<string, any>>(
-      `https://registry.npmjs.org/${packageName}/latest`,
+      `https://registry.npmjs.org/${encodeURIComponent(packageName)}/latest`,
     ).json()
 
     const result: Record<string, any> = {}

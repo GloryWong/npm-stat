@@ -1,12 +1,14 @@
 import ky from 'ky'
-import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
+import type { SearchType } from '@/types/search-type'
 
-export async function GET(_: NextRequest, { params: { userName } }: { params: { userName: string } }) {
+export async function GET(request: NextRequest, { params: { text } }: { params: { text: string } }) {
   try {
+    const searchType = (request.nextUrl.searchParams.get('type')) as SearchType | null ?? 'text'
+
     // https://registry.npmjs.org/-/v1/search?text=author:gloxy
     const data = await ky.get<any>(
-      `https://registry.npmjs.org/-/v1/search?text=author:${userName}`,
+      `https://registry.npmjs.org/-/v1/search?text=${searchType === 'text' ? '' : `${searchType}:`}${encodeURIComponent(text)}`,
     ).json()
 
     const packages = data.objects.map((v: any) => {

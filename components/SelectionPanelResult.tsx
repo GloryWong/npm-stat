@@ -4,9 +4,10 @@ import { Icon } from '@iconify/react'
 import { useState } from 'react'
 import type { Key } from '@react-types/shared'
 import type { PackageBasic } from '@/types/package'
+import type { SearchType } from '@/types/search-type'
 
-export default function SelectionPanelResult({ userName, onSelect, packageName }: { userName: string, packageName?: string, onSelect: (packageName: string) => void }) {
-  const { data, error, isLoading } = useSWR<PackageBasic[]>(`/api/packages/${userName}`)
+export default function SelectionPanelResult({ text, onSelect, packageName, searchType }: { text: string, packageName?: string, onSelect: (packageName: string) => void, searchType?: SearchType }) {
+  const { data, error, isLoading } = useSWR<PackageBasic[]>(`/api/packages/${encodeURIComponent(text)}?type=${searchType}`)
 
   const [selectedKeys, setSelectedKeys] = useState(new Set<Key>(packageName ? [packageName] : []))
 
