@@ -90,15 +90,14 @@ const userNames = createUserNames(3)
 logger.info('Created user names', userNames)
 
 const packageBasicSets = createUserPackageBasicSets(userNames)
+const packageBasicSetsAll = [...Object.values(packageBasicSets).flat(), ...createArrayOf(() => createPackages(faker.number.int({ min: 1, max: 5 })), 3).flat()]
 
-const downloadDatasets = Object.values(packageBasicSets).flat(2).map(v => v.name).reduce((pre, cur) => {
+const downloadDatasets = packageBasicSetsAll.map(v => v.name).reduce((pre, cur) => {
   return {
     ...pre,
     [cur]: createDownloadsDataset(cur),
   }
 }, {} as { [packageName: string]: Record<Period, PackagePanelDownloadData> })
-
-const packageBasicSetsAll = [...Object.values(packageBasicSets).flat(), ...createArrayOf(() => createPackages(faker.number.int({ min: 1, max: 5 })), 3).flat()]
 
 function createRandomDeps(num: number) {
   return createArrayOf(() => ({ [faker.word.noun({ length: { min: 3, max: 10 } })]: createRandomVersion() }), num)
