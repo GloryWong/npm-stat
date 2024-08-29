@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.11](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.10...npm-stat-v0.1.11) (2024-08-29)
+
+
+### Features
+
+* **search result:** support link with author ([90a3080](https://github.com/GloryWong/npm-stat/commit/90a308057c6ce7b51935c4d88331ed1371d0f966))
+
 ## [0.1.10](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.9...npm-stat-v0.1.10) (2024-08-29)
 
 
