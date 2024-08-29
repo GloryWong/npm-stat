@@ -16,7 +16,7 @@ function removeProtocol(url: string) {
 }
 
 function createLink(value: any, { className, pathOnly }: { className?: string, pathOnly?: boolean }) {
-  return typeof value === 'string' && (value.startsWith('http') || value.startsWith('https'))
+  return typeof value === 'string' && (value.startsWith('http://') || value.startsWith('https://'))
     ? <Link href={value} className={className} isExternal showAnchorIcon underline="hover">{pathOnly ? new URL(value).pathname.slice(1) : removeProtocol(value)}</Link>
     : String(value)
 }
