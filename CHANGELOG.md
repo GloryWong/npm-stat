@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.14](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.13...npm-stat-v0.1.14) (2024-08-30)
+
+
+### Bug Fixes
+
+* **package api:** publishInfo check ([32fe6fc](https://github.com/GloryWong/npm-stat/commit/32fe6fc5d1d0ac4a115a2d8efa1ade63f35fd087))
+
 ## [0.1.13](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.12...npm-stat-v0.1.13) (2024-08-30)
 
 
