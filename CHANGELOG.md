@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.13](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.12...npm-stat-v0.1.13) (2024-08-30)
+
+
+### Features
+
+* use publisher search && support internal link in package info ([2e654cf](https://github.com/GloryWong/npm-stat/commit/2e654cf331d6abbc4b93a149b3f9d5568390bc67))
+
+
+### Bug Fixes
+
+* prop name ([aad10e4](https://github.com/GloryWong/npm-stat/commit/aad10e4555dd8ae15d461c048fcb47f1dc53d50a))
+
 ## [0.1.12](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.11...npm-stat-v0.1.12) (2024-08-29)
 
 
