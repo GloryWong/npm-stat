@@ -11,7 +11,7 @@ export default function BaseGridCellMap({ value }: { value: Record<string, any> 
         <span className="py-1 px-3 bg-gray-900 text-gray-500">
           {
             typeof v === 'string' && isHttp(v)
-              ? <BaseGridLink isExternal url={v} className="text-sm text-gray-500" titleType="no-protocol" />
+              ? <BaseGridLink isExternal url={v} className="text-sm text-gray-500" urlTitleType="no-protocol" />
               : String(v)
           }
         </span>
