@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.15](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.14...npm-stat-v0.1.15) (2024-08-30)
+
+
+### Bug Fixes
+
+* grid classes ([1a3fcde](https://github.com/GloryWong/npm-stat/commit/1a3fcded12d5d160349a94c74768687f32375b40))
+
 ## [0.1.14](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.13...npm-stat-v0.1.14) (2024-08-30)
 
 
