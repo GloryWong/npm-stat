@@ -14,12 +14,19 @@ export interface BaseGridCellProps {
   block?: boolean
 }
 
+const colSpanMap: Record<number, string> = {
+  1: 'col-span-1',
+  2: 'col-span-2',
+  3: 'col-span-3',
+  4: 'col-span-4',
+}
+
 const Empty = () => <span className="text-gray-500 text-sm">----</span>
 
 export default function BaseGridCell({ label, value, block }: BaseGridCellProps) {
   const { cols } = useContext(BaseGridContext)
   return (
-    <div className={`${block ? `col-span-${cols} ` : ''}flex flex-col gap-2`}>
+    <div className={`${block ? `${colSpanMap[cols]} ` : ''}flex flex-col gap-2`}>
       <div className="text-gray-500 text-sm">{label}</div>
       <div className="flex gap-1 flex-wrap text-balance">
         {(() => {
