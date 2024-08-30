@@ -21,7 +21,7 @@ export async function GET(_: NextRequest, { params: { packageName } }: { params:
     }
 
     const publishInfo = data2.objects[0]?.package
-    if (publishInfo)
+    if (!publishInfo)
       throw new Error('Publish info is not found')
 
     return NextResponse.json<PackageInfo>({
