@@ -18,7 +18,6 @@ export async function GET(request: NextRequest, { params: { text } }: { params: 
         name: pkg.name,
         version: pkg.version,
         description: pkg.description,
-        author: pkg?.author?.username,
         publisher: pkg.publisher.username,
         date: pkg.date,
         npmLink: pkg.links.npm,

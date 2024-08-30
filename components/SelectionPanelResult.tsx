@@ -6,6 +6,7 @@ import type { Key } from '@react-types/shared'
 import { format } from 'timeago.js'
 import type { PackageBasic } from '@/types/package'
 import type { SearchType } from '@/types/search-type'
+import { createInternalUrl } from '@/utils/createInternalUrl'
 
 export default function SelectionPanelResult({ text, onSelect, packageName, searchType }: { text: string, packageName?: string, onSelect: (packageName: string) => void, searchType?: SearchType }) {
   const { data, error, isLoading } = useSWR<PackageBasic[]>(`/api/packages/${encodeURIComponent(text)}?type=${searchType}`)
@@ -62,13 +63,12 @@ export default function SelectionPanelResult({ text, onSelect, packageName, sear
                                       color="foreground"
                                       size="sm"
                                       underline="hover"
-                                      href={`/?${new URLSearchParams({
-                                        ...Object.fromEntries(new URLSearchParams(location.search)),
-                                        text: item.author ?? item.publisher,
-                                        searchType: 'author',
-                                      }).toString()}`}
+                                      href={createInternalUrl({
+                                        text: item.publisher,
+                                        searchType: 'publisher',
+                                      })}
                                     >
-                                      { item.author ?? item.publisher }
+                                      { item.publisher }
                                     </Link>
                                     <span className="">
                                       published

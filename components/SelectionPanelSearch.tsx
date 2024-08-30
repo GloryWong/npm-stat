@@ -49,7 +49,7 @@ export default function SelectionPanelSearch({ defaultInput = '', onConfirmInput
       </Select>
       <Input
         type="text"
-        placeholder="Author name"
+        placeholder="Publisher name"
         isClearable
         value={input}
         onKeyUp={(e) => {

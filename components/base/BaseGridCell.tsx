@@ -1,32 +1,49 @@
 import isPlainObject from 'is-plain-obj'
+import type { ReactNode } from 'react'
+import { isValidElement, useContext } from 'react'
 import BaseGridCellArray from './BaseGridCellArray'
 import BaseGridCellMap from './BaseGridCellMap'
 import BaseGridLink from './BaseGridLink'
+import { BaseGridContext } from './BaseGrid'
 import { isHttp } from '@/utils/isHttp'
 
 export interface BaseGridCellProps {
   label: string
-  value: any
+  value: ReactNode | Record<string, any>
+  // cols: number
   block?: boolean
 }
 
+const Empty = () => <span className="text-gray-500 text-sm">----</span>
+
 export default function BaseGridCell({ label, value, block }: BaseGridCellProps) {
+  const { cols } = useContext(BaseGridContext)
   return (
-    <div className={`${block ? 'col-span-2 ' : ''}flex flex-col gap-2`}>
+    <div className={`${block ? `col-span-${cols} ` : ''}flex flex-col gap-2`}>
       <div className="text-gray-500 text-sm">{label}</div>
-      <div className="flex gap-1 flex-wrap">
-        {
-          (value && Object.keys(value).length > 0)
-            ? (Array.isArray(value)
-                ? <BaseGridCellArray value={value} />
-                : isPlainObject(value)
-                  ? <BaseGridCellMap value={value} />
-                  : typeof value === 'string' && isHttp(value)
-                    ? <BaseGridLink isExternal url={value} className="text-gray-200" titleType="path" />
-                    : String(value)
-              )
-            : <span className="text-gray-500 text-sm">----</span>
-        }
+      <div className="flex gap-1 flex-wrap text-balance">
+        {(() => {
+          if (value === undefined)
+            return <Empty />
+
+          if (isValidElement(value))
+            return value
+
+          if (Array.isArray(value))
+            return <BaseGridCellArray value={value} />
+
+          if (isPlainObject(value)) {
+            if (Object.keys(value).length)
+              return <BaseGridCellMap value={value} />
+            else
+              return <Empty />
+          }
+
+          if (typeof value === 'string' && isHttp(value))
+            return <BaseGridLink isExternal url={value} className="text-gray-200" urlTitleType="path" />
+
+          return String(value)
+        })()}
       </div>
     </div>
   )

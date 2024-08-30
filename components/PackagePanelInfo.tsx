@@ -1,64 +1,110 @@
-import { ScrollShadow, Spinner } from '@nextui-org/react'
+import { Link, ScrollShadow, Spinner } from '@nextui-org/react'
 import { useMemo } from 'react'
 import { JsonView, darkStyles } from 'react-json-view-lite'
 import useSWR from 'swr'
-import type { PackageJson } from 'type-fest'
 import 'react-json-view-lite/dist/index.css'
+import { format } from 'timeago.js'
 import BaseModel from './base/BaseModel'
 import BaseGrid from './base/BaseGrid'
+import type { BaseGridCellProps } from './base/BaseGridCell'
+import type { PackageInfo } from '@/types/package'
+import { createInternalUrl } from '@/utils/createInternalUrl'
 
 interface Props {
   packageName: string
 }
 
+function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
+  const { packageJson, publisher, date, npmLink } = data
+
+  return [
+    {
+      label: 'Name',
+      value: packageJson.name,
+    },
+    {
+      label: 'Version',
+      value: packageJson.version,
+    },
+    {
+      label: 'Description',
+      value: packageJson.description,
+      block: true,
+    },
+    {
+      label: 'Publisher',
+      value: (
+        <Link
+          color="foreground"
+          underline="always"
+          href={createInternalUrl({
+            text: publisher,
+            searchType: 'publisher',
+          })}
+        >
+          { publisher }
+        </Link>
+      ),
+    },
+    {
+      label: 'Publish Time',
+      value: format(date),
+    },
+    {
+      label: 'Module Type',
+      value: packageJson.type === 'module' ? 'ESModule' : 'CommonJS',
+    },
+    {
+      label: 'License',
+      value: packageJson.license,
+    },
+    {
+      label: 'Repository',
+      value: (packageJson.repository as { url?: string } | undefined)?.url?.replace('git+', '').replace('.git', ''),
+    },
+    {
+      label: 'Registry',
+      value: npmLink,
+    },
+    {
+      label: 'Author',
+      value: packageJson.author,
+      block: true,
+    },
+    {
+      label: 'Keywords',
+      value: packageJson.keywords,
+      block: true,
+    },
+    {
+      label: 'Dependencies',
+      value: packageJson.dependencies,
+      block: true,
+    },
+    {
+      label: 'Dev Dependencies',
+      value: packageJson.devDependencies,
+      block: true,
+    },
+    {
+      label: 'Package JSON',
+      value: (
+        <BaseModel label="Package.json">
+          { data && <JsonView data={data} style={darkStyles} /> }
+        </BaseModel>
+      ),
+    },
+  ]
+}
+
 export default function PackagePanelInfo({ packageName }: Props) {
-  const { data, error, isLoading } = useSWR<PackageJson>(`/api/package/${encodeURIComponent(packageName)}`)
+  const { data, error, isLoading } = useSWR<PackageInfo>(`/api/package/${encodeURIComponent(packageName)}`)
 
-  const packageInfo = useMemo(() => {
+  const packageItems = useMemo(() => {
     if (!data)
-      return {}
+      return []
 
-    return {
-      name: {
-        label: 'Name',
-        value: data.name,
-      },
-      type: {
-        label: 'Type',
-        value: data.type === 'module' ? 'ESModule' : 'CommonJS',
-      },
-      description: {
-        label: 'Description',
-        value: data.description,
-        block: true,
-      },
-      repository: {
-        label: 'Repository',
-        value: (data.repository as { url?: string } | undefined)?.url?.replace('git+', '').replace('.git', ''),
-      },
-      license: {
-        label: 'License',
-        value: data.license,
-      },
-      author: {
-        label: 'Author',
-        value: data.author,
-      },
-      keywords: {
-        label: 'Keywords',
-        value: data.keywords,
-      },
-      dependencies: {
-        label: 'Dependencies',
-        value: data.dependencies,
-        block: true,
-      },
-      devDependencies: {
-        label: 'Dev Dependencies',
-        value: data.devDependencies,
-        block: true,
-      },
-    }
+    return createPackageItems(data)
   }, [data])
 
   return (
@@ -75,14 +121,9 @@ export default function PackagePanelInfo({ packageName }: Props) {
               )
             : (
                 <div className="w-full h-full flex flex-col gap-4">
-                  <div>
-                    <BaseModel label="Package.json">
-                      { data && <JsonView data={data} style={darkStyles} /> }
-                    </BaseModel>
-                  </div>
                   <div className="w-full flex-grow min-h-0">
                     <ScrollShadow className="h-full">
-                      <BaseGrid items={Object.values((packageInfo))} />
+                      <BaseGrid items={packageItems} />
                     </ScrollShadow>
                   </div>
                 </div>

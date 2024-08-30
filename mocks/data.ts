@@ -5,7 +5,7 @@ import type { PackagePanelDownloadData } from '@/components/PackagePanelDownload
 import { logger } from '@/utils/logger'
 
 import { periods } from '@/constants/periods'
-import type { PackageBasic } from '@/types/package'
+import type { PackageBasic, PackageInfo } from '@/types/package'
 import type { Period } from '@/types/period'
 
 faker.seed(1234)
@@ -107,21 +107,17 @@ function createRandomDeps(num: number) {
     }), {})
 }
 
-function createPackageInfo({ name, version, description, author }: PackageBasic) {
-  const packageInfo: PackageJson = {
+function createPackageInfo({ name, version, description, date, npmLink, publisher }: PackageBasic): PackageInfo {
+  const packageJson: PackageJson = {
     name,
     version,
     description,
     type: faker.helpers.arrayElement(['module', 'commonjs']),
-    ...(
-      author
-        ? { author: {
-            name: author,
-            email: faker.internet.email(),
-            url: faker.internet.url(),
-          } }
-        : {}
-    ),
+    author: {
+      name: publisher,
+      email: faker.internet.email(),
+      url: faker.internet.url(),
+    },
     license: 'MIT',
     homepage: faker.internet.url(),
     repository: {
@@ -134,7 +130,12 @@ function createPackageInfo({ name, version, description, author }: PackageBasic)
     ...(faker.datatype.boolean() ? { devDependencies: createRandomDeps(faker.number.int(10)) } : {}),
   }
 
-  return packageInfo
+  return {
+    packageJson,
+    date,
+    publisher,
+    npmLink,
+  }
 }
 
 const packageInfos = packageBasicSetsAll.map(createPackageInfo)

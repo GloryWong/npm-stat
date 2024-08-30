@@ -26,7 +26,7 @@ export const handlers = [
     return period ? HttpResponse.json(downloadDataset[period]) : HttpResponse.json(undefined, { status: 404 })
   }),
   http.get('/api/package/:packageName', ({ params }) => {
-    const packageInfo = packageInfos.find(v => v.name === params.packageName)
+    const packageInfo = packageInfos.find(v => v.packageJson.name === params.packageName)
 
     return packageInfo ? HttpResponse.json(packageInfo) : HttpResponse.json(undefined, { status: 404 })
   }),
