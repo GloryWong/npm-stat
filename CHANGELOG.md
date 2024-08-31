@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.16](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.15...npm-stat-v0.1.16) (2024-08-31)
+
+
+### Features
+
+* **package panel info:** deps lint ([68d928d](https://github.com/GloryWong/npm-stat/commit/68d928d5b4537fea5b6150363bc98c3b75816cd1))
+
+
+### Bug Fixes
+
+* client link url ([d57dece](https://github.com/GloryWong/npm-stat/commit/d57decefcade26c135c7eccdc4c68a6f163eb731))
+
 ## [0.1.15](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.14...npm-stat-v0.1.15) (2024-08-30)
 
 
