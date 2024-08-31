@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.17](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.16...npm-stat-v0.1.17) (2024-08-31)
+
+
+### Features
+
+* **package panel info:** support maintainer internal link ([41a9469](https://github.com/GloryWong/npm-stat/commit/41a9469b6632e104ac8191f5a4ff1ab90b1822a6))
+
 ## [0.1.16](https://github.com/GloryWong/npm-stat/compare/npm-stat-v0.1.15...npm-stat-v0.1.16) (2024-08-31)
 
 
