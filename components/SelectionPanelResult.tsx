@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import { useState } from 'react'
 import type { Key } from '@react-types/shared'
 import { format } from 'timeago.js'
-import { BaseClientLink } from './base/BaseClientLink'
+import { BaseLinkInternal } from './base/BaseLinkInternal'
 import type { PackageBasic } from '@/types/package'
 import type { SearchType } from '@/types/search-type'
 
@@ -59,7 +59,7 @@ export default function SelectionPanelResult({ text, onSelect, packageName, sear
                                     { item.description }
                                   </p>
                                   <div className="flex items-center gap-1">
-                                    <BaseClientLink
+                                    <BaseLinkInternal
                                       searchParams={{
                                         text: item.maintainer,
                                         searchType: 'maintainer',
@@ -67,7 +67,7 @@ export default function SelectionPanelResult({ text, onSelect, packageName, sear
                                       underline="hover"
                                     >
                                       { item.maintainer }
-                                    </BaseClientLink>
+                                    </BaseLinkInternal>
                                     <span className="">
                                       published
                                       {' '}

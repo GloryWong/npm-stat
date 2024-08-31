@@ -32,7 +32,7 @@ export default function SelectionPanelSearch({ defaultInput = '', onConfirmInput
     <div className="flex gap-2">
       <Select
         aria-label="Select search type"
-        className="w-[150px]"
+        className="w-[130px] flex-shrink-0"
         selectedKeys={selectedKeys}
         onSelectionChange={(keys) => {
           onSearchTypeChange?.(Array.from(keys)[0] as SearchType)

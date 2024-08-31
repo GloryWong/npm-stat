@@ -4,6 +4,7 @@ import { JsonView, darkStyles } from 'react-json-view-lite'
 import useSWR from 'swr'
 import 'react-json-view-lite/dist/index.css'
 import { format } from 'timeago.js'
+import type { PackageJson } from 'type-fest'
 import BaseModel from './base/BaseModel'
 import BaseGrid from './base/BaseGrid'
 import type { BaseGridCellProps } from './base/BaseGridCell'
@@ -11,6 +12,13 @@ import type { PackageInfo } from '@/types/package'
 
 interface Props {
   packageName: string
+}
+
+function createDepsLink(deps: PackageJson['dependencies']) {
+  return Object.fromEntries(Object.entries(deps ?? {}).map(([k, v]) => ([
+    `${k}:linkInternal:{"searchParams":{"searchType":"text","text":"${k}"},"size":"sm","underline":"hover","showAnchorIcon":true}`,
+    v,
+  ])))
 }
 
 function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
@@ -66,12 +74,12 @@ function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
     },
     {
       label: 'Dependencies',
-      value: Array.from(Object.keys(packageJson.dependencies ?? {})),
+      value: createDepsLink(packageJson.dependencies),
       block: true,
     },
     {
       label: 'Dev Dependencies',
-      value: Array.from(Object.keys(packageJson.devDependencies ?? {})),
+      value: createDepsLink(packageJson.devDependencies),
       block: true,
     },
     {

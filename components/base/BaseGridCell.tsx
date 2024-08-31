@@ -3,9 +3,8 @@ import type { ReactNode } from 'react'
 import { isValidElement, useContext } from 'react'
 import BaseGridCellArray from './BaseGridCellArray'
 import BaseGridCellMap from './BaseGridCellMap'
-import BaseGridLink from './BaseGridLink'
 import { BaseGridContext } from './BaseGrid'
-import { isHttp } from '@/utils/isHttp'
+import BaseGridCellValue from './BaseGridCellValue'
 
 export interface BaseGridCellProps {
   label: string
@@ -50,10 +49,7 @@ export default function BaseGridCell({ label, value, block }: BaseGridCellProps)
               return <Empty />
           }
 
-          if (typeof value === 'string' && isHttp(value))
-            return <BaseGridLink isExternal url={value} className="text-gray-200" urlTitleType="path" />
-
-          return String(value)
+          return <BaseGridCellValue value={value as ReactNode} />
         })()}
       </div>
     </div>

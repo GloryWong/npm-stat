@@ -11,22 +11,22 @@ function createClientLinkUrl(searchParams: Record<string, any>, path = '/') {
   }).toString()}`
 }
 
-interface Props {
+export interface BaseLinkInternalProps {
   path?: string
   searchParams: Record<string, any>
-  children: ReactNode
+  children?: ReactNode
   className?: string
   size?: LinkProps['size']
   underline?: LinkProps['underline']
   showAnchorIcon?: LinkProps['showAnchorIcon']
 }
 
-export function BaseClientLink({ path, searchParams, children, className, size, underline, showAnchorIcon }: Props) {
+export function BaseLinkInternal({ path, searchParams, children, className, size, underline, showAnchorIcon }: BaseLinkInternalProps) {
   const _searchParams = useSearchParams()
   return (
     <Link
       color="foreground"
-      className={className}
+      className={`gap-1${` ${className}`}`}
       size={size}
       underline={underline}
       anchorIcon={<Icon icon="material-symbols:search" />}
