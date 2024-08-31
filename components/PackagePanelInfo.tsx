@@ -8,15 +8,21 @@ import type { PackageJson } from 'type-fest'
 import BaseModel from './base/BaseModel'
 import BaseGrid from './base/BaseGrid'
 import type { BaseGridCellProps } from './base/BaseGridCell'
+import type { BaseLinkInternalProps } from './base/BaseLinkInternal'
 import type { PackageInfo } from '@/types/package'
+import type { SearchType } from '@/types/search-type'
 
 interface Props {
   packageName: string
 }
 
+function createLintInternalString(str: string, searchType: SearchType, size?: BaseLinkInternalProps['size']) {
+  return `${str}:linkInternal:{"searchParams":{"searchType":"${searchType}","text":"${str}"},${size ? `"size":"${size}",` : ''}"underline":"hover","showAnchorIcon":true}`
+}
+
 function createDepsLink(deps: PackageJson['dependencies']) {
   return Object.fromEntries(Object.entries(deps ?? {}).map(([k, v]) => ([
-    `${k}:linkInternal:{"searchParams":{"searchType":"text","text":"${k}"},"size":"sm","underline":"hover","showAnchorIcon":true}`,
+    createLintInternalString(k, 'text', 'sm'),
     v,
   ])))
 }
@@ -40,7 +46,7 @@ function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
     },
     {
       label: 'Maintainers',
-      value: maintainers,
+      value: maintainers.map(v => createLintInternalString(v, 'maintainer', 'sm')),
     },
     {
       label: 'Publish Time',
@@ -85,8 +91,17 @@ function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
     {
       label: 'Package JSON',
       value: (
-        <BaseModel label="Package.json">
-          { data && <JsonView data={data} style={darkStyles} /> }
+        <BaseModel
+          buttonLabel="show"
+          buttonSize="sm"
+          modalTitle={(
+            <div className="flex items-center gap-4">
+              <span className="">{packageJson.name}</span>
+              <span className="text-gray-500">package.json</span>
+            </div>
+          )}
+        >
+          <JsonView data={packageJson} style={darkStyles} />
         </BaseModel>
       ),
     },
