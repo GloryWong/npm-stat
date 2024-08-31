@@ -30,7 +30,7 @@ export default function SelectionPanel({ text, packageName, onSelectPackage, onC
             : (
                 <div className="flex items-center gap-2 flex-wrap">
                   <Icon icon="fa6-regular:hand-point-up" />
-                  Type a publisher name to search for packages
+                  Type to search for packages
                 </div>
               )
         }

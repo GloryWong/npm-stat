@@ -4,14 +4,14 @@ export interface PackageBasic {
   name: string
   version: string
   description: string
-  publisher: string
+  maintainer: string
   date: string
   npmLink: string
 }
 
 export interface PackageInfo {
   packageJson: PackageJson
-  publisher: string
+  maintainers: string[]
   date: string
   npmLink: string
 }

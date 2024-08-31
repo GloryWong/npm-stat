@@ -26,7 +26,7 @@ export async function GET(_: NextRequest, { params: { packageName } }: { params:
 
     return NextResponse.json<PackageInfo>({
       packageJson,
-      publisher: publishInfo.publisher.username,
+      maintainers: publishInfo.maintainers.map((v: any) => v.username),
       date: publishInfo.date,
       npmLink: publishInfo.links.npm,
     })

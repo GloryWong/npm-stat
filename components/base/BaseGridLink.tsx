@@ -17,7 +17,7 @@ function removeProtocol(url: string) {
 
 export default function BaseGridLink({ url, className, title, urlTitleType = 'full', isExternal }: Props) {
   return (
-    <Link href={url} className={className} isExternal={isExternal} showAnchorIcon={isExternal} underline="hover">
+    <Link href={url} className={className} isExternal={isExternal} showAnchorIcon={isExternal} underline="always">
       {(() => {
         if (title)
           return title

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-duplicate-key */
-import { Icon } from '@iconify/react/dist/iconify.js'
+import { Icon } from '@iconify/react'
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 import { useCallback, useEffect, useState } from 'react'
 import type { Key } from '@react-types/shared'
@@ -49,7 +49,7 @@ export default function SelectionPanelSearch({ defaultInput = '', onConfirmInput
       </Select>
       <Input
         type="text"
-        placeholder="Publisher name"
+        placeholder="type to search"
         isClearable
         value={input}
         onKeyUp={(e) => {

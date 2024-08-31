@@ -27,15 +27,14 @@ function createRandomPackageName() {
   return `${scope}${name}`
 }
 
-function createPackages(pkgNum: number, userName?: string) {
+function createPackages(pkgNum: number, userName: string) {
   const packageNames = createArrayOf(() => createRandomPackageName(), pkgNum)
 
   const packages: PackageBasic[] = createArrayOf(index => ({
     name: packageNames[index],
     version: createRandomVersion(),
     description: faker.lorem.paragraph({ min: 1, max: 3 }),
-    author: userName,
-    publisher: userName ?? faker.internet.userName(),
+    maintainer: userName,
     date: faker.date.anytime().toISOString(),
     npmLink: `https://www.npmjs.com/package/${packageNames[index]}`,
   }), packageNames.length)
@@ -90,7 +89,7 @@ const userNames = createUserNames(3)
 logger.info('Created user names', userNames)
 
 const packageBasicSets = createUserPackageBasicSets(userNames)
-const packageBasicSetsAll = [...Object.values(packageBasicSets).flat(), ...createArrayOf(() => createPackages(faker.number.int({ min: 1, max: 5 })), 3).flat()]
+const packageBasicSetsAll = Object.values(packageBasicSets).flat()
 
 const downloadDatasets = packageBasicSetsAll.map(v => v.name).reduce((pre, cur) => {
   return {
@@ -107,14 +106,14 @@ function createRandomDeps(num: number) {
     }), {})
 }
 
-function createPackageInfo({ name, version, description, date, npmLink, publisher }: PackageBasic): PackageInfo {
+function createPackageInfo({ name, version, description, date, npmLink, maintainer }: PackageBasic): PackageInfo {
   const packageJson: PackageJson = {
     name,
     version,
     description,
     type: faker.helpers.arrayElement(['module', 'commonjs']),
     author: {
-      name: publisher,
+      name: maintainer,
       email: faker.internet.email(),
       url: faker.internet.url(),
     },
@@ -133,7 +132,7 @@ function createPackageInfo({ name, version, description, date, npmLink, publishe
   return {
     packageJson,
     date,
-    publisher,
+    maintainers: Array.from(new Set([maintainer, ...faker.helpers.arrayElements(userNames)])),
     npmLink,
   }
 }

@@ -12,13 +12,13 @@ export async function GET(request: NextRequest, { params: { text } }: { params: 
       `https://registry.npmjs.org/-/v1/search?text=${searchType === 'text' ? '' : `${searchType}:`}${encodeURIComponent(text)}`,
     ).json()
 
-    const packages: PackageBasic[] = data.objects.map((v: any) => {
+    const packages = data.objects.map((v: any): PackageBasic => {
       const pkg = v.package
       return {
         name: pkg.name,
         version: pkg.version,
         description: pkg.description,
-        publisher: pkg.publisher.username,
+        maintainer: pkg.maintainers[0].username,
         date: pkg.date,
         npmLink: pkg.links.npm,
       }

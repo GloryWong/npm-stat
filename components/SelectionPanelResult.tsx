@@ -4,9 +4,9 @@ import { Icon } from '@iconify/react'
 import { useState } from 'react'
 import type { Key } from '@react-types/shared'
 import { format } from 'timeago.js'
+import { BaseClientLink } from './base/BaseClientLink'
 import type { PackageBasic } from '@/types/package'
 import type { SearchType } from '@/types/search-type'
-import { createInternalUrl } from '@/utils/createInternalUrl'
 
 export default function SelectionPanelResult({ text, onSelect, packageName, searchType }: { text: string, packageName?: string, onSelect: (packageName: string) => void, searchType?: SearchType }) {
   const { data, error, isLoading } = useSWR<PackageBasic[]>(`/api/packages/${encodeURIComponent(text)}?type=${searchType}`)
@@ -59,17 +59,15 @@ export default function SelectionPanelResult({ text, onSelect, packageName, sear
                                     { item.description }
                                   </p>
                                   <div className="flex items-center gap-1">
-                                    <Link
-                                      color="foreground"
-                                      size="sm"
+                                    <BaseClientLink
+                                      searchParams={{
+                                        text: item.maintainer,
+                                        searchType: 'maintainer',
+                                      }}
                                       underline="hover"
-                                      href={createInternalUrl({
-                                        text: item.publisher,
-                                        searchType: 'publisher',
-                                      })}
                                     >
-                                      { item.publisher }
-                                    </Link>
+                                      { item.maintainer }
+                                    </BaseClientLink>
                                     <span className="">
                                       published
                                       {' '}

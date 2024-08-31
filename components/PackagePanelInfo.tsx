@@ -1,4 +1,4 @@
-import { Link, ScrollShadow, Spinner } from '@nextui-org/react'
+import { ScrollShadow, Spinner } from '@nextui-org/react'
 import { useMemo } from 'react'
 import { JsonView, darkStyles } from 'react-json-view-lite'
 import useSWR from 'swr'
@@ -8,14 +8,13 @@ import BaseModel from './base/BaseModel'
 import BaseGrid from './base/BaseGrid'
 import type { BaseGridCellProps } from './base/BaseGridCell'
 import type { PackageInfo } from '@/types/package'
-import { createInternalUrl } from '@/utils/createInternalUrl'
 
 interface Props {
   packageName: string
 }
 
 function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
-  const { packageJson, publisher, date, npmLink } = data
+  const { packageJson, maintainers, date, npmLink } = data
 
   return [
     {
@@ -32,19 +31,8 @@ function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
       block: true,
     },
     {
-      label: 'Publisher',
-      value: (
-        <Link
-          color="foreground"
-          underline="always"
-          href={createInternalUrl({
-            text: publisher,
-            searchType: 'publisher',
-          })}
-        >
-          { publisher }
-        </Link>
-      ),
+      label: 'Maintainers',
+      value: maintainers,
     },
     {
       label: 'Publish Time',
@@ -78,12 +66,12 @@ function createPackageItems(data: PackageInfo): BaseGridCellProps[] {
     },
     {
       label: 'Dependencies',
-      value: packageJson.dependencies,
+      value: Array.from(Object.keys(packageJson.dependencies ?? {})),
       block: true,
     },
     {
       label: 'Dev Dependencies',
-      value: packageJson.devDependencies,
+      value: Array.from(Object.keys(packageJson.devDependencies ?? {})),
       block: true,
     },
     {

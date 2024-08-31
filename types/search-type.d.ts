@@ -1,1 +1,1 @@
-export type SearchType = 'text' | 'publisher'
+export type SearchType = 'text' | 'maintainer'

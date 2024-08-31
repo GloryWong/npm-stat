@@ -36,8 +36,12 @@ export default function BaseGridCell({ label, value, block }: BaseGridCellProps)
           if (isValidElement(value))
             return value
 
-          if (Array.isArray(value))
-            return <BaseGridCellArray value={value} />
+          if (Array.isArray(value)) {
+            if (value.length)
+              return <BaseGridCellArray value={value} />
+            else
+              return <Empty />
+          }
 
           if (isPlainObject(value)) {
             if (Object.keys(value).length)
